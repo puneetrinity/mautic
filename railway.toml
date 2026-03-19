@@ -1,0 +1,21 @@
+[build]
+builder = "dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 10
+
+[[services]]
+name = "mautic"
+
+[services.env]
+APP_ENV = "prod"
+APP_DEBUG = "0"
+MAUTIC_DB_DRIVER = "pdo_mysql"
+MAUTIC_DB_HOST = "${{ MySQL.MYSQLHOST }}"
+MAUTIC_DB_PORT = "${{ MySQL.MYSQLPORT }}"
+MAUTIC_DB_NAME = "${{ MySQL.MYSQLDATABASE }}"
+MAUTIC_DB_USER = "${{ MySQL.MYSQLUSER }}"
+MAUTIC_DB_PASSWORD = "${{ MySQL.MYSQLPASSWORD }}"
+MAUTIC_TRUSTED_HOSTS = "*.railway.app,railway.app"
+MAUTIC_SECRET_KEY = "${{ RAILWAY_STATIC_URL }}"

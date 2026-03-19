@@ -180,6 +180,12 @@
       "phpstan/extension-installer": true,
       "php-http/discovery": true,
       "cweagans/composer-patches": true
+    },
+    "audit": {
+      "block-insecure": false,
+      "ignore": {
+        "PKSA-5x9t-bkbj-vmgp": "Required by mautic/core-lib, no fix available"
+      }
     }
   },
   "extra": {
