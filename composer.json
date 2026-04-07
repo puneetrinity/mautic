@@ -22,7 +22,8 @@
     },
   "require": {
     "composer/installers": "^2.3",
-    "mautic/core-lib": "^7.0"
+    "mautic/core-lib": "^7.0",
+    "symfony/brevo-mailer": "^7.4"
   },
   "require-dev": {
     "codeception/codeception": "^5.1",
