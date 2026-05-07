@@ -131,9 +131,11 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 MAILTO=""
 
 # Core operations (staggered) - official Mautic schedule
-0,15,30,45 * * * * www-data /usr/local/bin/php /var/www/html/bin/console mautic:segments:update --no-interaction >> /var/log/mautic-cron.log 2>&1
-5,20,35,50 * * * * www-data /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:rebuild --no-interaction >> /var/log/mautic-cron.log 2>&1
-10,25,40,55 * * * * www-data /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:trigger --no-interaction >> /var/log/mautic-cron.log 2>&1
+# timeout 600 = hard 10-min cap. Prevents stuck PHP processes from holding
+# the symfony lock indefinitely (chronic zombie issue observed May 2026).
+0,15,30,45 * * * * www-data timeout 600 /usr/local/bin/php /var/www/html/bin/console mautic:segments:update --no-interaction >> /var/log/mautic-cron.log 2>&1
+5,20,35,50 * * * * www-data timeout 600 /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:rebuild --no-interaction >> /var/log/mautic-cron.log 2>&1
+10,25,40,55 * * * * www-data timeout 600 /usr/local/bin/php /var/www/html/bin/console mautic:campaigns:trigger --no-interaction >> /var/log/mautic-cron.log 2>&1
 
 # Reports
 */15 * * * * www-data /usr/local/bin/php /var/www/html/bin/console mautic:reports:scheduler --no-interaction >> /var/log/mautic-cron.log 2>&1
